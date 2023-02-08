@@ -1,5 +1,5 @@
 def interface():
-    print("Blood calculator asdf")
+    print("Blood calculator")
     keep_running = True
     while keep_running:
         print("Options:")
