@@ -1,0 +1,1 @@
+def my_function():    dictionary = {"cars":"Honda"}    print(dictionary)    try:        dictionary["car"]    except KeyError:        print("code fixed")        dictionary["cars"]def main():    my_function()if __name__ == "__main__":    main()
