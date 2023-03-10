@@ -11,3 +11,10 @@ test = {"id" : 1, "test_name": "HDL", "test_result": 150}
 r = requests.post(server + "/add_test", json=test)
 print(r.status_code)
 print(r.text)
+
+r = requests.get(server + "/get_results/1")
+print(r.status_code)
+print(r.text)
+# answer = r.json()
+# for t in answer:
+#     print(t)
