@@ -1,24 +1,40 @@
 from flask import Flask, request, jsonify
+from pymodm import connect
+from pymodm import MongoModel, fields
+from PatientModel import Patient
+import logging
 
 db = {}
 
 app = Flask(__name__)
 
+def init_server():
+    logging.basicConfig(filename = "server.log", filemode='w')
+    connect("mongodb+srv://shaunwu1:shaunwu200@bme547.auwrcbj.mongodb.net/"
+            "health_db_2023?retryWrites=true&w=majority")
+    
+def add_patient_to_db(patient_id, patient_name, blood_type):
+    # new_patient = {"id": id,
+    #                "name": name,
+    #                "blood_type": blood_type,
+    #                "tests": []}
+    # db[id] = new_patient
+    # print(db)
+    new_patient = Patient(patient_id = patient_id,
+                          patient_name = patient_name,
+                          blood_type = blood_type)
+    saved_patient = new_patient.save()
+    return saved_patient
 
-def add_patient_to_db(id, name, blood_type):
-    new_patient = {"id": id,
-                   "name": name,
-                   "blood_type": blood_type,
-                   "tests": []}
-    db[id] = new_patient
-    print(db)
-
-def add_test(id, test_name, test_result):
-    test = {"id": id,
-            "test_name": test_name,
-            "test_result": test_result}
-    db[id]["tests"].append(test)
-    print(db)
+def add_test(patient_id, test_name, test_result):
+    # test = {"id": id,
+    #         "test_name": test_name,
+    #         "test_result": test_result}
+    # db[id]["tests"].append((test_name, test_result))
+    # print(db)
+    x = Patient.objects.raw({"_id": patient_id}.first())
+    x.tests.append((test_name, test_result))
+    x.save()
 
 @app.route("/new_patient", methods=["POST"])
 def post_new_patient():

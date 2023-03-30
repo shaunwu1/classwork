@@ -3,3 +3,6 @@ pytest==7.2.1
 pytest-pycodestyle
 requests
 flask
+pymodm
+dnspython
+connect
