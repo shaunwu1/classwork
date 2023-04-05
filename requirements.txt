@@ -6,3 +6,4 @@ flask
 pymodm
 dnspython
 connect
+Pillow
